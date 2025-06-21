@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo Bài Viết SEO (Mr.Nhan)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 py-10">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow">
+        <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">Tạo Bài Viết Chuẩn SEO</h1>
+
+        <!-- Hiển thị thông báo -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div
+            class="p-4 mb-4 rounded {{ 'bg-green-100 text-green-800' if category == 'success' else 'bg-red-100 text-red-800' }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Form tạo nội dung -->
+        <form method="POST" name="content_form" class="space-y-4 mb-6">
+            {{ content_form.hidden_tag() }}
+            <input type="hidden" name="form_name" value="content_form">
+            <div>
+                {{ content_form.topic.label(class="block font-medium") }}
+                {{ content_form.topic(class="w-full p-2 border rounded") }}
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    {{ content_form.tone.label(class="block font-medium") }}
+                    {{ content_form.tone(class="w-full p-2 border rounded") }}
+                </div>
+                <div>
+                    {{ content_form.word_count.label(class="block font-medium") }}
+                    {{ content_form.word_count(class="w-full p-2 border rounded") }}
+                </div>
+            </div>
+            <div>
+                {{ content_form.submit(class="w-full bg-indigo-600 text-white py-2 rounded") }}
+            </div>
+        </form>
+
+        <!-- Hiển thị nội dung đã tạo -->
+        {% if generated_content %}
+        <h2 class="text-xl font-semibold mb-2">Bài viết của bạn</h2>
+        <div class="w-full p-4 border rounded bg-gray-50 whitespace-pre-wrap mb-4">
+            {{ generated_content }}
+        </div>
+
+        <form method="POST" action="{{ url_for('seo.download_text') }}">
+                <input type="hidden" name="content" value="{{ generated_content }}">
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Tải bài viết (Text)
+                </button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
