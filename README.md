@@ -1,5 +1,4 @@
 
-
 **Chatbot sinh bài viết SEO tự động sử dụng Gemini API 2.0-fast. Đơn giản, nhanh chóng, dễ dùng.**
 
 ---
